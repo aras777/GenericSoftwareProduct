@@ -1,0 +1,63 @@
+<script type="text/javascript">
+
+    EXTENSION_0 = function () {
+        if (SharedDataSnapshot["t"].length >= Number(SharedEnvSnapshot["t"])) {
+            $(".applicationDisplay").css("display", "inline");
+            GLOBAL_ANALYTICS_PROCESSING = 2;
+            KEEP_ALIVE = Number(PDS_ViewDataModel[2]["v"]);
+            GLOBAL_SECURITY_ALARM = setInterval(
+                function () { if (KEEP_ALIVE == Number(PDS_ViewDataModel[2]["v"])) { alert("⚠⛔🔒"); }; KEEP_ALIVE = Number(PDS_ViewDataModel[2]["v"]); }
+                , 30000);
+		}
+    }
+
+    EXTENSION_1 = function () {
+        var arrayLength = SharedDataSnapshot["t"].length;
+        var selfTimestamp = 0;
+        for (var i = 0; i < arrayLength; i++) {
+            if (SharedDataSnapshot["t"][i]["d"]["signature"] == PDS_SIGNATURE) {
+                selfTimestamp = new Date(SharedDataSnapshot["t"][i]["d"]["timestamp"]);
+                break;
+            }
+        }
+
+        var numberOfLiveSessions = 1;
+        for (var i = 0; i < arrayLength; i++) {
+            if (SharedDataSnapshot["t"][i]["d"]["signature"] != PDS_SIGNATURE) {
+                var externalTimestamp = new Date(SharedDataSnapshot["t"][i]["d"]["timestamp"]);
+                var seconds = Math.abs((selfTimestamp.getTime() - externalTimestamp.getTime()) / 1000);
+                if (seconds <= 60) {
+                    numberOfLiveSessions += 1;
+                }
+            }
+        }
+
+        $("#counter").html(numberOfLiveSessions);
+        EXTENSION_2();
+    }
+	
+    EXTENSION_2 = function () {
+        if (typeof ITERATIONS === 'undefined') ITERATIONS = 0; ITERATIONS++;
+        if (ITERATIONS == 1) console.log("∞🔒");
+        var arrayLength = SharedDataSnapshot["t"].length;
+
+		//var IOT_SIGNATURE = "41ae636737f335bc50994cbfb08dea6785fcf74569d393df2c68c6c0c9530dad";
+        //for (var i = 0; i < arrayLength; i++) {
+        //    if (SharedDataSnapshot["t"][i]["d"]["signature"] == DEVICE_SIGNATURE) {
+        //        $("#d2c").text(SharedDataSnapshot["t"][i]["d"]["value"]);
+        //        break;
+        //    }
+        //}
+		
+		for (var i = 0; i < arrayLength; i++) {
+			if (SharedDataSnapshot["t"][i]["d"]["signature"] == PDS_SIGNATURE) {
+				$("#value-value").text(SharedDataSnapshot["t"][i]["d"]["value"] + ";   " + SharedDataSnapshot["t"][i]["d"]["timestamp"]);
+			}
+		}
+		
+		$("#InfoButton").css("visibility", "visible");
+		$("#InfoButton").on("click", function () {
+            hopscotch.startTour(tour);
+        });
+    };
+</script>

@@ -1,0 +1,13 @@
+setlocal
+set TransactionSignature=51bc4045bc590e8498e27e4aaa35c12b893ada1fae9a700bbc5c0b9b78f26b79
+set ASPNETCORE_URLS=http://*:7777
+set ASPNETCORE_ENVIRONMENT=Development
+set DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+set DOTNET_CLI_TELEMETRY_OPTOUT=1
+set ASPNETCORE_PREVENTHOSTINGSTARTUP=true
+set runDevelWinSelfContained=1
+call runner.bat
+endlocal
+
+
+
