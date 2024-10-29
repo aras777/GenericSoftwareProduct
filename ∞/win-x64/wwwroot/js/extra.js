@@ -4,7 +4,7 @@ var tour = {
         {
             target: "counter", 
             title: "Before you start",
-            content: "This is live sessions counter. Demo is fixed for one session for you, so you can see this view. All new sessions uder this identity will have no effect on the counter.",
+            content: "This is live sessions counter. Demo is fixed for one session for you, so you can see this view. All new sessions under this identity will have no effect on the counter.",
             placement: "bottom" // gdzie ma pojawić się dymek (np. top, bottom, left, right)
         },
         {
